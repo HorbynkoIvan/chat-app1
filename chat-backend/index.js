@@ -1,12 +1,19 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const config = require('./config/app')
-const app = express()
-const port = process.env.API_PORT
+const router = require('./router')
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+
+const app = express()
+
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
+
+app.use(router)
+
+const port = config.appPort
+
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${config.appPort}`)
+    console.log(`Example app listening on port ${port}`)
 })
